@@ -31,7 +31,7 @@ python main.py
 21. Add custom tool
 ------------------------------
 
-NOTE: If you want to add functionality according or automate some funky command you can edit them in options.py
+NOTE: If you want to add functionality according or automate some funky command you can edit them using option 21
 
 ------------------------------
 
