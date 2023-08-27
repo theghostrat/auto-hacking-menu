@@ -1,43 +1,52 @@
 from options import *
 import json
+import os
 
-custom_tools = {}
-
-def load_custom_tools():
-    try:
-        with open("custom_tools.json", "r") as file:
-            custom_tools.update(json.load(file))
-    except FileNotFoundError:
-        pass
-
-def save_custom_tools():
-    with open("custom_tools.json", "w") as file:
-        json.dump(custom_tools, file)
-
-def add_custom_tool():
-    tool_name = input("Enter the name of the custom tool: ")
-    tool_command = input(f"Enter the command to execute {tool_name}: ")
-    custom_tools[tool_name] = tool_command
-    save_custom_tools()
-    print(f"Custom tool '{tool_name}' added with command '{tool_command}'.")
 
 def menu():
+  custom_tools = {}
+
+  def load_custom_tools():
+      try:
+          with open("custom_tools.json", "r") as file:
+              custom_tools.update(json.load(file))
+      except FileNotFoundError:
+          pass
+  
+  def save_custom_tools():
+      with open("custom_tools.json", "w") as file:
+          json.dump(custom_tools, file)
+  
+  def add_custom_tool():
+      tool_name = input("Enter the name of the custom tool: ")
+      tool_command = input(f"Enter the command to execute {tool_name}: ")
+      custom_tools[tool_name] = tool_command
+      save_custom_tools()
+      print(f"Custom tool '{tool_name}' added with command '{tool_command}'.")
+
   load_custom_tools()
-  options = [
-    "1. AnonSurf", "2. Information Gathering", "3. Password Attack",
+  options = ["1. AnonSurf", "2. Information Gathering", "3. Password Attack",
     "4. Wireless Attack", "5. SQL Injection Tools", "6. Phishing Attack",
     "7. Web Attack Tool", "8. Post exploitation", "9. Forensic Tools",
     "10. Payload Creator", "11. Router Exploit", "12. Wifi Jamming",
     "13. XSS Attack Tool", "14. SocialMedia Finder", "15. DDos Attack Tools",
     "16. Steganography Tools", "17. IDN Homograph Attack",
-    "18. Hash Cracking Tools", "19. SocialMedia Attack", "20. Android Hack, "21. Add custom tool"
-  ]
+    "18. Hash Cracking Tools", "19. SocialMedia Attack", "20. Android Hack", "21. Add custom tool" ]
+  if custom_tools:
+    for i in custom_tools.keys():
+      options.append(i)
+
   for option in options:
     print(option)
   print("-" * 30 + "\n")
   print("NOTE: If you want to add functionality according or automate some funky command you can edit them in options.py\n")
   print("-" * 30 + "\n")
-  selected_option = int(input("Select an option (1-21): "))
+  try:
+    selected_option = input("Select an option (1-21): ")
+    selected_option = int(selected_option)
+  except ValueError:
+    if selected_option in custom_tools.keys():
+      os.system(custom_tools[selected_option])
 
   if selected_option == 1:
     anon_surf()
